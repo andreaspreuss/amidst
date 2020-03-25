@@ -22,12 +22,13 @@ public class RealClass {
 		result.put('J', "long");
 		result.put('S', "short");
 		result.put('Z', "boolean");
+		result.put('V', "void");
 		return Collections.unmodifiableMap(result);
 	}
 
 	private static final Map<Character, String> PRIMITIV_TYPE_CONVERSION_MAP = createPrimitiveTypeConversionMap();
-	private static final Pattern ARG_PATTERN = Pattern.compile("([\\[]+)?([BCDFIJSZ]|L[^;]+)");
-	private static final Pattern OBJECT_PATTERN = Pattern.compile("^([\\[]+)?[LBCDFIJSZ]");
+	private static final Pattern ARG_PATTERN = Pattern.compile("([\\[]+)?([BCDFIJSZV]|L[^;]+)");
+	private static final Pattern OBJECT_PATTERN = Pattern.compile("^([\\[]+)?[LBCDFIJSZV]");
 	public static final int CLASS_DATA_WILDCARD = -1;
 
 	private final String realClassName;
@@ -195,7 +196,6 @@ public class RealClass {
 		for (ReferenceIndex entry : methodIndices) {
 			String value = getStringValueOfConstant(entry.getValue2());
 			String[] args = readArgumentsAndReturn(value);
-
 			if(arguments.length == args.length) {
 				for(int i = 0; i < args.length; i++) {
 					if(arguments[i] != null && !arguments[i].equals(args[i]))
